@@ -3,30 +3,37 @@
 #!include "heroes/baptiste/regen_burst.opy"
 
 
-rule "[baptiste/init.opy]: Baptiste":
+rule "Baptiste":
     @Event eachPlayer
-    @Condition eventPlayer.call_init
     @Condition eventPlayer.hero_setup == Hero.BAPTISTE
     
-    newHero(ADJ_BAPTISTE_HEALTH, 0, 0)
+    eventPlayer.ult_change_check = 0.93
+    eventPlayer.removeAllHealthPools()
+    #eventPlayer.setAmmo(1, 10)
+    #eventPlayer.setMaxAmmo(1, 10)
+    eventPlayer.setMaxHealth(80)
+    resetHealth()
+    eventPlayer.addHealthPool(Health.NORMAL, 199, true, true)
+    #eventPlayer.addHealthPool(Health.SHIELDS, 25, true, true)
+    resetStats()
+    resetStatuses()
+    enableAllAbilities()
+    eventPlayer.setDamageDealt(96)
+    setBaseHealing(eventPlayer, 0.7)
+    eventPlayer.balance_change_check = true
+
     removeSelfHealing()
 
-    setBaseDamage(eventPlayer, ADJ_BAPTISTE_PRIMARY_DAMAGE/OW2_BAPTISTE_PRIMARY_DAMAGE)
-    setBaseHealing(eventPlayer, 0.7)
 
-    eventPlayer.balance_change_check = true
-    eventPlayer.call_init = false
-
-
-rule "[baptiste/init.opy]: Increase Baptiste melee damage":
+rule "Increase Baptiste melee damage":
     @Event playerDealtDamage
     @Condition eventPlayer.hero_setup == Hero.BAPTISTE
-    @Condition eventAbility in [Button.MELEE]
+    @Condition eventAbility == Button.MELEE
     
-    damage(victim, attacker, ((eventDamage/eventPlayer._base_damage_scalar) - eventDamage)/eventPlayer._base_damage_scalar)
+    damage(victim, attacker, eventDamage * 1.045 - eventDamage)
 
 
-rule "[baptiste/init.opy]: Increase Biotic Launcher healing":
+rule "Increase Biotic Launcher healing":
     @Event playerDealtHealing
     @Condition eventPlayer.balance_change_check == true
     @Condition eventPlayer.hero_setup == Hero.BAPTISTE

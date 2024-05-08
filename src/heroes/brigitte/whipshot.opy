@@ -11,7 +11,7 @@ rule "[brigitte/init.opy]: Correct Whipshot damage":
 
 # rule "[brigitte/whipshot.opy]: Reduce Whip Shot damage to OW1":
 #     @Event playerDealtDamage
-#     @Condition eventPlayer.hero_setup == Hero.BRIGITTE
+#     @Hero brigitte
 #     @Condition eventAbility == Button.ABILITY_1
 
-#     heal(victim, null, eventDamage - eventDamage*(ADJ_BRIGITTE_WHIPSHOT_DAMAGE/OW2_BRIGITTE_WHIPSHOT_DAMAGE))
+#     heal(victim, null, eventDamage - eventDamage*(OW1_BRIGITTE_WHIPSHOT_DAMAGE/OW2_BRIGITTE_WHIPSHOT_DAMAGE))

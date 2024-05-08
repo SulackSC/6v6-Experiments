@@ -3,20 +3,24 @@
 #!include "heroes/soldier/biotic_field.opy"
 
 
-rule "[soldier/init.opy]: Soldier 76":
+rule "Soldier 76":
     @Event eachPlayer
-    @Condition eventPlayer.call_init
     @Condition eventPlayer.hero_setup == Hero.SOLDIER
     
-    newHero(ADJ_SOLDIER_HEALTH, 0, 0)
+    eventPlayer.ult_change_check = 1.2
+    eventPlayer.removeAllHealthPools()
+    eventPlayer.setMaxHealth(100)
+    resetHealth()
+    eventPlayer.addHealthPool(Health.NORMAL, 199, true, true)
+    heal(eventPlayer, null, 1)
+    resetStats()
+    resetStatuses()
+    enableAllAbilities()
+    eventPlayer.setHealingDealt(86.4)
     removeSelfHealing()
 
-    eventPlayer.setHealingDealt(86.4)
 
-    eventPlayer.call_init = false
-
-
-rule "[soldier/init.opy]: Increase Heavy Pulse Rifle damage":
+rule "Increase Heavy Pulse Rifle damage":
     @Event playerDealtDamage
     @Condition eventPlayer.hero_setup == Hero.SOLDIER
     @Condition eventAbility == Button.PRIMARY_FIRE

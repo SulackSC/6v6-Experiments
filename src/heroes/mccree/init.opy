@@ -4,12 +4,17 @@
 #!include "heroes/mccree/deadeye.opy"
 
 
-rule "[mccree/init.opy]: Cassidy":
+rule "Cassidy":
     @Event eachPlayer
-    @Condition eventPlayer.call_init
     @Condition eventPlayer.hero_setup == Hero.MCCREE
     
-    newHero(ADJ_MCCREE_HEALTH, 0, 0)
+    eventPlayer.ult_change_check = 1.22
+    eventPlayer.removeAllHealthPools()
+    eventPlayer.setMaxHealth(100)
+    resetHealth()
+    eventPlayer.addHealthPool(Health.NORMAL, 249, true, true)
+    resetStats()
+    resetStatuses()
+    enableAllAbilities()
+    
     removeSelfHealing()
-
-    eventPlayer.call_init = false

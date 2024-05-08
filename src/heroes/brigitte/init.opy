@@ -5,21 +5,26 @@
 #!include "heroes/brigitte/bash.opy"
 
 
-rule "[brigitte/init.opy]: Brigitte":
+rule "Brigitte":
     @Event eachPlayer
-    @Condition eventPlayer.call_init
     @Condition eventPlayer.hero_setup == Hero.BRIGITTE
-
-    newHero(ADJ_BRIGITTE_HEALTH, ADJ_BRIGITTE_ARMOR, 0)
-    removeSelfHealing()
-
+    
+    eventPlayer.ult_change_check = 1
+    eventPlayer.removeAllHealthPools()
+    eventPlayer.setMaxHealth(100)
+    resetHealth()
+    eventPlayer.addHealthPool(Health.NORMAL, 149, true, true)
+    eventPlayer.addHealthPool(Health.ARMOR, 50, true, true)
+    resetStats()
+    resetStatuses()
+    enableAllAbilities()
     setBaseDamage(eventPlayer, ADJ_BRIGITTE_FLAIL_DAMAGE/OW2_BRIGITTE_FLAIL_DAMAGE)
     eventPlayer.setHealingDealt(80)
 
-    eventPlayer.call_init = false
+    removeSelfHealing()
 
 
-rule "[brigitte/init.opy]: Increase Inspire self healing":
+rule "Increase Inspire self healing":
     @Event playerDealtHealing
     @Condition eventPlayer.hero_setup == Hero.BRIGITTE
     @Condition healee == healer
@@ -27,7 +32,7 @@ rule "[brigitte/init.opy]: Increase Inspire self healing":
     heal(healee, null, eventHealing * 1.246 - eventHealing)
 
 
-rule "[brigitte/init.opy]: Increase Repair Pack healing":
+rule "Increase Repair Pack healing":
     @Event playerDealtHealing
     @Condition eventPlayer.hero_setup == Hero.BRIGITTE
     @Condition eventAbility == Button.ABILITY_2
@@ -35,7 +40,7 @@ rule "[brigitte/init.opy]: Increase Repair Pack healing":
     heal(healee, healer, eventHealing * 1.25 - eventHealing)
 
 
-rule "[brigitte/init.opy]: Extra Repair Pack burst healing":
+rule "Extra Repair Pack burst healing":
     @Event playerDealtHealing
     @Condition eventPlayer.hero_setup == Hero.BRIGITTE
     @Condition eventAbility == Button.ABILITY_2

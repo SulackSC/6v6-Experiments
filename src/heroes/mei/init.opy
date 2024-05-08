@@ -3,15 +3,18 @@
 #!include "heroes/mei/cryo_freeze.opy"
 
 
-rule "[mei/init.opy]: Mei":
+rule "Mei":
     @Event eachPlayer
-    @Condition eventPlayer.call_init
     @Condition eventPlayer.hero_setup == Hero.MEI
-
-    newHero(ADJ_MEI_HEALTH, 0, 0)
-    removeSelfHealing()
-
+    
+    eventPlayer.ult_change_check = 1.18
+    eventPlayer.removeAllHealthPools()
+    eventPlayer.setMaxHealth(80)
     eventPlayer.setMaxAmmo(0, 120)
     eventPlayer.setAmmo(0, 120)
-
-    eventPlayer.call_init = false
+    resetHealth()
+    eventPlayer.addHealthPool(Health.NORMAL, 249, true, true)
+    resetStats()
+    resetStatuses()
+    enableAllAbilities()
+    removeSelfHealing()

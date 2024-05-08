@@ -3,17 +3,21 @@
 #!include "heroes/zenyatta/transc.opy"
 
 
-rule "[zenyatta/init.opy]: Zenyatta":
+rule "Zenyatta":
     @Event eachPlayer
-    @Condition eventPlayer.call_init
     @Condition eventPlayer.hero_setup == Hero.ZENYATTA
-
-    newHero(ADJ_ZENYATTA_HEALTH, 0, ADJ_ZENYATTA_SHIELDS)
-    removeSelfHealing()
-
-    eventPlayer.setKnockbackDealt(7)
-
+    
+    eventPlayer.ult_change_check = 0.97
+    eventPlayer.removeAllHealthPools()
     eventPlayer.setAmmo(0, 20)
     eventPlayer.setMaxAmmo(0, 20)
-
-    eventPlayer.call_init = false
+    eventPlayer.setMaxHealth(100)
+    resetHealth()
+    eventPlayer.addHealthPool(Health.NORMAL, 49, true, true)
+    eventPlayer.addHealthPool(Health.SHIELDS, 150, true, true)
+    resetStats()
+    resetStatuses()
+    enableAllAbilities()
+    eventPlayer.setKnockbackDealt(7)
+    eventPlayer.setHealingDealt(100)
+    removeSelfHealing()

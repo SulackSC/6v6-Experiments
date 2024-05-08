@@ -1,12 +1,17 @@
 #!mainFile "../../dev_main.opy"
 
 
-rule "[ashe/init.opy]: Ashe":
+rule "Ashe":
     @Event eachPlayer
-    @Condition eventPlayer.call_init
     @Condition eventPlayer.hero_setup == Hero.ASHE
-
-    newHero(ADJ_ASHE_HEALTH, 0, 0)
+    
+    eventPlayer.ult_change_check = 1.21
+    eventPlayer.removeAllHealthPools()
+    eventPlayer.setMaxHealth(100)
+    resetHealth()
+    eventPlayer.addHealthPool(Health.NORMAL, 199, true, true)
+    resetStats()
+    resetStatuses()
+    enableAllAbilities()
+    
     removeSelfHealing()
-
-    eventPlayer.call_init = false
