@@ -1,27 +1,23 @@
 #!mainFile "../../dev_main.opy"
 
 
-rule "Illari":
+rule "[illari/init.opy]: Illari":
     @Event eachPlayer
+    @Condition eventPlayer.call_init
     @Condition eventPlayer.hero_setup == Hero.ILLARI
     
-    eventPlayer.ult_change_check = 1.04
-    eventPlayer.removeAllHealthPools()
-    eventPlayer.setMaxAmmo(0, 14)
-    eventPlayer.setAmmo(0, 14)
-    eventPlayer.setMaxHealth(100)
-    resetHealth()
-    eventPlayer.addHealthPool(Health.NORMAL, 199, true, true)
-    resetStats()
-    resetStatuses()
-    enableAllAbilities()
-    eventPlayer.setDamageDealt(75)
-    eventPlayer.setHealingDealt(100)
-
+    newHero(ADJ_ILLARI_HEALTH, 0, 0)
     removePassiveHealing()
 
+    eventPlayer.setDamageDealt(75)
 
-rule "Increase Illari melee damage":
+    eventPlayer.setMaxAmmo(0, 14)
+    eventPlayer.setAmmo(0, 14)
+
+    eventPlayer.call_init = false
+
+
+rule "[illari/init.opy]: Increase Illari melee damage":
     @Event playerDealtDamage
     @Condition eventPlayer.hero_setup == Hero.ILLARI
     @Condition eventAbility == Button.MELEE
@@ -29,7 +25,7 @@ rule "Increase Illari melee damage":
     damage(victim, attacker, eventDamage * 1.34 - eventDamage)
 
 
-rule "Increase Solar Rifle damage":
+rule "[illari/init.opy]: Increase Solar Rifle damage":
     @Event playerDealtDamage
     @Condition eventPlayer.hero_setup == Hero.ILLARI
     @Condition eventWasCriticalHit == false
@@ -39,7 +35,7 @@ rule "Increase Solar Rifle damage":
     damage(victim, attacker, eventDamage * 1.267 - eventDamage)
 
 
-rule "Increase Solar Rifle critical hit damage":
+rule "[illari/init.opy]: Increase Solar Rifle critical hit damage":
     @Event playerDealtDamage
     @Condition eventPlayer.hero_setup == Hero.ILLARI
     @Condition eventWasCriticalHit == true
@@ -47,7 +43,7 @@ rule "Increase Solar Rifle critical hit damage":
     damage(victim, attacker, eventDamage * 1.327 - eventDamage)
 
 
-rule "Reduce Solar Rifle healing":
+rule "[illari/init.opy]: Reduce Solar Rifle healing":
     @Event eachPlayer
     @Condition eventPlayer.hero_setup == Hero.ILLARI
     @Condition eventPlayer.isHoldingButton(Button.SECONDARY_FIRE) == true

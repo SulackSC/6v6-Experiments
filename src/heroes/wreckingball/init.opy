@@ -1,26 +1,24 @@
 #!mainFile "../../dev_main.opy"
 
 
-rule "Wrecking Ball":
+rule "[wreckingball/init.opy]: Wrecking Ball":
     @Event eachPlayer
+    @Condition eventPlayer.call_init
     @Condition eventPlayer.hero_setup == Hero.HAMMOND
-    
-    eventPlayer.ult_change_check = 1.05
-    eventPlayer.removeAllHealthPools()
-    eventPlayer.setMaxHealth(75)
-    resetHealth()
-    eventPlayer.addHealthPool(Health.NORMAL, 399 if eventPlayer.isDuplicatingAHero() or setting_echo_tank_hp else 449, true, true)
-    eventPlayer.addHealthPool(Health.ARMOR, 50 if eventPlayer.isDuplicatingAHero() or setting_echo_tank_hp else 100, true, true)
-    resetStats()
-    resetStatuses()
-    enableAllAbilities()
+
+    newHero(
+        ADJ_WRECKING_BALL_HEALTH_DUPLICATE if eventPlayer.isDuplicatingAHero() or SETTING_ECHO_TANK_HP else ADJ_WRECKING_BALL_HEALTH, 
+        ADJ_WRECKING_BALL_ARMOR_DUPLICATE if eventPlayer.isDuplicatingAHero() or SETTING_ECHO_TANK_HP else ADJ_WRECKING_BALL_ARMOR, 
+        0)
     removeTankPassive()
     removeSelfHealing()
     #eventPlayer.startScalingSize(0.9, true)
     #eventPlayer.setJumpVerticalSpeed(104)
 
+    eventPlayer.call_init = false
 
-rule "Force Grappling Hook cooldown":
+
+rule "[wreckingball/init.opy]: Force Grappling Hook cooldown":
     @Event eachPlayer
     @Condition eventPlayer.hero_setup == Hero.HAMMOND
     @Condition eventPlayer.isFiringSecondaryFire() == true
@@ -75,14 +73,14 @@ rule "Disable Adaptive Shields when not near enemy players":
     eventPlayer.setAbility2Enabled(false)
 */
 
-rule "Remove Adaptive Shields overhealth transfer":
+rule "[wreckingball/init.opy]: Remove Adaptive Shields overhealth transfer":
     @Event eachPlayer
     @Condition eventPlayer.hero_setup == Hero.HAMMOND
-    @Condition eventPlayer.isUsingAbility2() == true
+    @Condition eventPlayer.isUsingAbility2()
     
     eventPlayer.disallowButton(Button.ABILITY_2)
     eventPlayer.setAbility2Enabled(false)
-    waitUntil(not eventPlayer.isUsingAbility2(), 999999986991104)
+    waitUntil(not eventPlayer.isUsingAbility2(), Math.INFINITY)
     enableAllAbilities()
     eventPlayer.allowButton(Button.ABILITY_2)
 
