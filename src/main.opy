@@ -1,5 +1,8 @@
 #!include "env/env.opy"
 
+# Experiments
+#!include "passives/experiments/knockback.opy"
+
 # Useful constants
 #!include "constants/ow1_constants.opy"
 #!include "constants/ow2_constants.opy"
