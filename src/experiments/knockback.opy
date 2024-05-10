@@ -1,4 +1,4 @@
-# mainFile "../dev_main.op"
+#!mainFile "../../dev_main.opy"
 # Define knockback intensity
 
 
