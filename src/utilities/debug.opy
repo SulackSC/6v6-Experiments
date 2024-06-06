@@ -45,6 +45,8 @@ rule "[utilities/debug.opy]: player debug (Top Right)":
     # hudSubheader(eventPlayer, "not isDuplicatingAHero() = {}".format(not eventPlayer.isDuplicatingAHero()), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.STRING)
     # hudSubheader(eventPlayer, "hp_before_duplicate = {}".format(eventPlayer.hp_before_duplicate), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.STRING)
     # hudSubheader(eventPlayer, "call_init = {}".format(eventPlayer.call_init), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.STRING)
+    hudSubheader(eventPlayer, "default_shields = {}".format(eventPlayer.default_shields), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.STRING)
+    hudSubheader(eventPlayer, "Hero Random Scale = {}".format(eventPlayer.hero_size_multiplyer), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.STRING)
     # hudSubheader(eventPlayer, "_hero_switched = {}".format(switchedHero(eventPlayer)), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.STRING)
     # hudSubheader(eventPlayer, "getAltitude() = {}".format(eventPlayer.getAltitude()), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.STRING)
     # hudSubheader(eventPlayer, "hasStatusEffect(Status.HACKED) = {}".format(eventPlayer.hasStatusEffect(Status.HACKED)), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.STRING)
@@ -125,16 +127,16 @@ rule "[utilities/debug.opy]: player debug (Top Right)":
     # hudSubheader(eventPlayer, "distance(scrap_start, scrap_detonation) = {}".format(distance(eventPlayer._scrap_start_pos, eventPlayer._scrap_detonation_pos)), HudPosition.RIGHT, 1, Color.WHITE, HudReeval.STRING)
 
 
-rule "[utilities/debug.opy]: do something on interact":
-    @Event eachPlayer
-    @Condition DEBUG_MODE
-    @Condition eventPlayer.isHoldingButton(Button.INTERACT)
+# rule "[utilities/debug.opy]: do something on interact":
+#     @Event eachPlayer
+#     @Condition DEBUG_MODE
+#     @Condition eventPlayer.isHoldingButton(Button.INTERACT)
 
-    damage(getAllPlayers(), null, 25)
-    eventPlayer.setAbilityCooldown(Button.ABILITY_1, 0)
-    eventPlayer.setAbilityCooldown(Button.ABILITY_2, 0)
-    eventPlayer.setAbilityCooldown(Button.SECONDARY_FIRE, 0)
-    eventPlayer.setUltCharge(100)
+#     damage(getAllPlayers(), null, 25)
+#     eventPlayer.setAbilityCooldown(Button.ABILITY_1, 0)
+#     eventPlayer.setAbilityCooldown(Button.ABILITY_2, 0)
+#     eventPlayer.setAbilityCooldown(Button.SECONDARY_FIRE, 0)
+#     eventPlayer.setUltCharge(100)
 
 
 rule "[utilities/debug.opy]: Show Player Damage/Healing":

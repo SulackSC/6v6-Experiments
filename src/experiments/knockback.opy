@@ -1,6 +1,7 @@
-# mainFile "../dev_main.op"
+#!mainFile "../../dev_main.opy"
 # Define knockback intensity
 
+globalvar RESPAWN_SIZE_CHECK = createWorkshopSetting(bool, "Experiments", "Knockback on Every Damage Event", false, 0)
 
 rule "Add knockback on primary fire hit":
     @Event playerDealtDamage
